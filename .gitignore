@@ -1,0 +1,18 @@
+# Çevre değişkenleri — ASLA commit etme
+.env
+.env.local
+
+# Yüklenen görseller — sunucuda volume ile saklanır
+html/uploads/*
+!html/uploads/.gitkeep
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# Geçici
+*.log
+tmp/

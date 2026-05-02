@@ -1,0 +1,61 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    container_name: ak_web
+    restart: unless-stopped
+    ports:
+      - "3000:80"
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_NAME: ${DB_NAME:-aksite}
+      DB_USER: ${DB_USER:-akuser}
+      DB_PASS: ${DB_PASS:-guclu-sifre-degistir}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-admin123}
+      SITE_URL: ${SITE_URL:-https://abdurrahmankaya.com}
+    volumes:
+      # Kalıcı görseller — Coolify'da Volume olarak tanımla
+      - uploads_data:/var/www/html/uploads
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: mysql:8.0
+    container_name: ak_db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${DB_NAME:-aksite}
+      MYSQL_USER: ${DB_USER:-akuser}
+      MYSQL_PASSWORD: ${DB_PASS:-guclu-sifre-degistir}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASS:-root-sifre-degistir}
+    volumes:
+      # Kalıcı veritabanı — Coolify'da Volume olarak tanımla
+      - db_data:/var/lib/mysql
+      - ./database/schema.sql:/docker-entrypoint-initdb.d/schema.sql:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${DB_ROOT_PASS:-root-sifre-degistir}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: ak_pma
+    restart: unless-stopped
+    ports:
+      - "3001:80"
+    environment:
+      PMA_HOST: db
+      PMA_USER: ${DB_USER:-akuser}
+      PMA_PASSWORD: ${DB_PASS:-guclu-sifre-degistir}
+    depends_on:
+      - db
+
+volumes:
+  uploads_data:
+    driver: local
+  db_data:
+    driver: local

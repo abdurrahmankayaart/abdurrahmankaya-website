@@ -1,0 +1,12 @@
+Options -Indexes
+RewriteEngine On
+
+# HTTPS yönlendirmesi (production'da aktif edin)
+# RewriteCond %{HTTPS} off
+# RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Blog post temiz URL: /blog/slug → /post.php?slug=slug
+RewriteRule ^blog/([a-z0-9-]+)/?$ /post.php?slug=$1 [L,QSA]
+
+# Uploads koruması
+RewriteRule ^uploads/.*\.(php|phtml|php3)$ - [F,L]
