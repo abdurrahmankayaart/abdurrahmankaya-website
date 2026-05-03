@@ -61,6 +61,14 @@ function read_time(string $content): int {
     return max(1, (int)ceil($words / 200));
 }
 
+function ga_snippet(): string {
+    $id = get_setting('ga_id', '');
+    if (!$id || !preg_match('/^G-[A-Z0-9]+$/', $id)) return '';
+    $id = htmlspecialchars($id, ENT_QUOTES, 'UTF-8');
+    return "<script async src=\"https://www.googletagmanager.com/gtag/js?id=$id\"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','$id');</script>";
+}
+
 function redirect(string $url): void {
     header('Location: ' . $url);
     exit;

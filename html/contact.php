@@ -44,11 +44,11 @@ if (!$to_email) {
     http_response_code(500); echo json_encode(['error' => 'Alıcı e-posta adresi yapılandırılmamış.']); exit;
 }
 
-// SMTP ayarları
-$smtp_host = getenv('SMTP_HOST') ?: '';
-$smtp_user = getenv('SMTP_USER') ?: '';
-$smtp_pass = getenv('SMTP_PASS') ?: '';
-$smtp_port = (int)(getenv('SMTP_PORT') ?: 587);
+// SMTP ayarları — DB'den oku, env var fallback
+$smtp_host = get_setting('smtp_host', getenv('SMTP_HOST') ?: '');
+$smtp_user = get_setting('smtp_user', getenv('SMTP_USER') ?: '');
+$smtp_pass = get_setting('smtp_pass', getenv('SMTP_PASS') ?: '');
+$smtp_port = (int)(get_setting('smtp_port', getenv('SMTP_PORT') ?: '587') ?: 587);
 
 $body = "
 <html><body style='font-family:Arial,sans-serif;color:#333'>

@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['hero_photo_file'])) 
 
 // Ayarları kaydet
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_FILES['hero_photo_file'])) {
-    $fields = ['site_name','site_title','site_desc','site_email','linkedin','github','twitter','instagram','hero_title','hero_subtitle','about_text','skills','stat_years','stat_projects','stat_clients','phone','address','whatsapp'];
+    $fields = ['site_name','site_title','site_desc','site_email','linkedin','github','twitter','instagram','hero_title','hero_subtitle','about_text','skills','stat_years','stat_projects','stat_clients','phone','address','whatsapp','ga_id','smtp_host','smtp_port','smtp_user','smtp_pass'];
     try {
         $stmt = db()->prepare("INSERT INTO settings (`key`,`value`) VALUES (?,?) ON DUPLICATE KEY UPDATE `value`=?");
         foreach ($fields as $f) {
@@ -190,6 +190,33 @@ $cfg = get_all_settings();
           <div class="form-group">
             <label>Adres</label>
             <input type="text" name="address" class="form-control" value="<?= e($cfg['address'] ?? '') ?>" placeholder="İstanbul, Türkiye">
+          </div>
+        </div>
+
+        <div class="editor-wrap" style="grid-column:1/-1">
+          <h2 style="margin-bottom:1.25rem">Analitik & E-posta</h2>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+            <div class="form-group" style="grid-column:1/-1">
+              <label>Google Analytics 4 Measurement ID</label>
+              <input type="text" name="ga_id" class="form-control" value="<?= e($cfg['ga_id'] ?? '') ?>" placeholder="G-XXXXXXXXXX">
+              <small style="color:var(--dim)">Google Analytics konsolundan alınan Measurement ID. Boş bırakırsanız GA devre dışı.</small>
+            </div>
+            <div class="form-group">
+              <label>SMTP Host</label>
+              <input type="text" name="smtp_host" class="form-control" value="<?= e($cfg['smtp_host'] ?? '') ?>" placeholder="smtp.gmail.com">
+            </div>
+            <div class="form-group">
+              <label>SMTP Port</label>
+              <input type="number" name="smtp_port" class="form-control" value="<?= e($cfg['smtp_port'] ?? '587') ?>" placeholder="587">
+            </div>
+            <div class="form-group">
+              <label>SMTP Kullanıcı</label>
+              <input type="email" name="smtp_user" class="form-control" value="<?= e($cfg['smtp_user'] ?? '') ?>" placeholder="ornek@gmail.com">
+            </div>
+            <div class="form-group">
+              <label>SMTP Şifre / Uygulama Şifresi</label>
+              <input type="password" name="smtp_pass" class="form-control" value="<?= e($cfg['smtp_pass'] ?? '') ?>" placeholder="••••••••">
+            </div>
           </div>
         </div>
 

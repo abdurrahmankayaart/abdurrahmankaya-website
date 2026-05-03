@@ -28,11 +28,25 @@ $skills = array_filter(array_map('trim', explode(',', $cfg['skills'] ?? '')));
   <meta property="og:description" content="<?= e($site_desc) ?>">
   <?php if ($hero_photo): ?><meta property="og:image" content="<?= SITE_URL . e($hero_photo) ?>"><?php endif; ?>
   <meta name="twitter:card" content="summary_large_image">
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"<?= e($site_name) ?>","url":"<?= SITE_URL ?>","jobTitle":"<?= e($site_title) ?>"}</script>
+  <?php
+  $ldPerson = [
+    '@context' => 'https://schema.org',
+    '@type'    => 'Person',
+    'name'     => $site_name,
+    'url'      => SITE_URL,
+    'jobTitle' => $site_title,
+    'email'    => $cfg['site_email'] ?? '',
+  ];
+  $sameAs = array_filter([$cfg['linkedin'] ?? '', $cfg['github'] ?? '', $cfg['twitter'] ?? '', $cfg['instagram'] ?? '']);
+  if ($sameAs) $ldPerson['sameAs'] = array_values($sameAs);
+  if ($hero_photo) $ldPerson['image'] = SITE_URL . $hero_photo;
+  ?>
+  <script type="application/ld+json"><?= json_encode($ldPerson, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) ?></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/style.css">
+  <?= ga_snippet() ?>
 </head>
 <body>
 
