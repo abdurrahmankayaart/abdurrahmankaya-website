@@ -5,10 +5,19 @@ $cfg = get_all_settings();
 $page     = max(1, (int)($_GET['page'] ?? 1));
 $per_page = 9;
 $category = trim($_GET['category'] ?? '');
+$tag      = trim($_GET['tag'] ?? '');
 
 try {
-    $where  = $category ? 'WHERE published=1 AND category=?' : 'WHERE published=1';
-    $params = $category ? [$category] : [];
+    if ($tag) {
+        $where  = 'WHERE published=1 AND FIND_IN_SET(?, REPLACE(tags, ", ", ","))';
+        $params = [$tag];
+    } elseif ($category) {
+        $where  = 'WHERE published=1 AND category=?';
+        $params = [$category];
+    } else {
+        $where  = 'WHERE published=1';
+        $params = [];
+    }
 
     $total  = db()->prepare("SELECT COUNT(*) FROM posts $where");
     $total->execute($params);
@@ -34,8 +43,13 @@ $site_name = $cfg['site_name'] ?? 'Abdurrahman Kaya';
   <title>Blog — <?= e($site_name) ?></title>
   <meta name="description" content="<?= e($site_name) ?> blog — teknoloji, yazılım ve dijital dönüşüm yazıları.">
   <link rel="canonical" href="<?= SITE_URL ?>/blog.php">
+  <meta property="og:type"        content="website">
+  <meta property="og:site_name"   content="<?= e($site_name) ?>">
   <meta property="og:title"       content="Blog — <?= e($site_name) ?>">
   <meta property="og:description" content="Teknoloji ve yazılım geliştirme hakkında içgörüler.">
+  <meta property="og:url"         content="<?= SITE_URL ?>/blog.php">
+  <?php if ($cfg['hero_photo'] ?? ''): ?><meta property="og:image" content="<?= SITE_URL . e($cfg['hero_photo']) ?>"><?php endif; ?>
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -119,8 +133,12 @@ $site_name = $cfg['site_name'] ?? 'Abdurrahman Kaya';
       <?php if ($pages > 1): ?>
       <div class="pagination">
         <?php for ($i = 1; $i <= $pages; $i++): ?>
-          <a href="?page=<?= $i ?><?= $category ? '&category=' . urlencode($category) : '' ?>"
-             class="page-btn <?= $i === $page ? 'active' : '' ?>"><?= $i ?></a>
+          <?php
+            $qs = 'page=' . $i;
+            if ($category) $qs .= '&category=' . urlencode($category);
+            if ($tag)      $qs .= '&tag=' . urlencode($tag);
+          ?>
+          <a href="?<?= $qs ?>" class="page-btn <?= $i === $page ? 'active' : '' ?>"><?= $i ?></a>
         <?php endfor; ?>
       </div>
       <?php endif; ?>
