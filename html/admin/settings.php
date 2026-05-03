@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['hero_photo_file'])) 
 
 // Ayarları kaydet
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_FILES['hero_photo_file'])) {
-    $fields = ['site_name','site_title','site_desc','site_email','linkedin','github','twitter','instagram','hero_title','hero_subtitle','about_text','skills'];
+    $fields = ['site_name','site_title','site_desc','site_email','linkedin','github','twitter','instagram','hero_title','hero_subtitle','about_text','skills','stat_years','stat_projects','stat_clients','phone','address','whatsapp'];
     try {
         $stmt = db()->prepare("INSERT INTO settings (`key`,`value`) VALUES (?,?) ON DUPLICATE KEY UPDATE `value`=?");
         foreach ($fields as $f) {
@@ -156,6 +156,40 @@ $cfg = get_all_settings();
           <div class="form-group">
             <label>Yetenekler / Teknolojiler (virgülle ayır)</label>
             <input type="text" name="skills" class="form-control" value="<?= e($cfg['skills'] ?? '') ?>" placeholder="PHP, MySQL, Docker, React">
+          </div>
+        </div>
+
+        <div class="editor-wrap">
+          <h2 style="margin-bottom:1.25rem">Hero İstatistikler</h2>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem">
+            <div class="form-group">
+              <label>Yıl Deneyim</label>
+              <input type="number" name="stat_years" class="form-control" value="<?= e($cfg['stat_years'] ?? '5') ?>" min="0">
+            </div>
+            <div class="form-group">
+              <label>Tamamlanan Proje</label>
+              <input type="number" name="stat_projects" class="form-control" value="<?= e($cfg['stat_projects'] ?? '50') ?>" min="0">
+            </div>
+            <div class="form-group">
+              <label>Mutlu Müşteri</label>
+              <input type="number" name="stat_clients" class="form-control" value="<?= e($cfg['stat_clients'] ?? '30') ?>" min="0">
+            </div>
+          </div>
+        </div>
+
+        <div class="editor-wrap">
+          <h2 style="margin-bottom:1.25rem">İletişim Bilgileri</h2>
+          <div class="form-group">
+            <label>Telefon</label>
+            <input type="text" name="phone" class="form-control" value="<?= e($cfg['phone'] ?? '') ?>" placeholder="+90 5XX XXX XX XX">
+          </div>
+          <div class="form-group">
+            <label>WhatsApp Numarası (başında + ile)</label>
+            <input type="text" name="whatsapp" class="form-control" value="<?= e($cfg['whatsapp'] ?? '') ?>" placeholder="+905XXXXXXXXX">
+          </div>
+          <div class="form-group">
+            <label>Adres</label>
+            <input type="text" name="address" class="form-control" value="<?= e($cfg['address'] ?? '') ?>" placeholder="İstanbul, Türkiye">
           </div>
         </div>
 

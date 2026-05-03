@@ -79,15 +79,15 @@ $skills = array_filter(array_map('trim', explode(',', $cfg['skills'] ?? '')));
         </div>
         <div class="hero-stats">
           <div class="hero-stat">
-            <div class="hero-stat-num" data-counter data-target="5" data-suffix="+">0</div>
+            <div class="hero-stat-num" data-counter data-target="<?= (int)($cfg['stat_years'] ?? 5) ?>" data-suffix="+">0</div>
             <div class="hero-stat-lbl">Yıl Deneyim</div>
           </div>
           <div class="hero-stat">
-            <div class="hero-stat-num" data-counter data-target="50" data-suffix="+">0</div>
+            <div class="hero-stat-num" data-counter data-target="<?= (int)($cfg['stat_projects'] ?? 50) ?>" data-suffix="+">0</div>
             <div class="hero-stat-lbl">Tamamlanan Proje</div>
           </div>
           <div class="hero-stat">
-            <div class="hero-stat-num" data-counter data-target="30" data-suffix="+">0</div>
+            <div class="hero-stat-num" data-counter data-target="<?= (int)($cfg['stat_clients'] ?? 30) ?>" data-suffix="+">0</div>
             <div class="hero-stat-lbl">Mutlu Müşteri</div>
           </div>
         </div>
@@ -102,8 +102,8 @@ $skills = array_filter(array_map('trim', explode(',', $cfg['skills'] ?? '')));
             <?php endif; ?>
           </div>
         </div>
-        <div class="hero-float-badge top-right">✅ 5+ Yıl Deneyim</div>
-        <div class="hero-float-badge bottom-left">⭐ 50+ Proje</div>
+        <div class="hero-float-badge top-right">✅ <?= (int)($cfg['stat_years'] ?? 5) ?>+ Yıl Deneyim</div>
+        <div class="hero-float-badge bottom-left">⭐ <?= (int)($cfg['stat_projects'] ?? 50) ?>+ Proje</div>
       </div>
     </div>
   </div>
@@ -224,7 +224,11 @@ $skills = array_filter(array_map('trim', explode(',', $cfg['skills'] ?? '')));
       <p>Fikrinizi güçlü bir dijital ürüne dönüştürmek için hemen iletişime geçin.</p>
       <div class="cta-actions">
         <a href="mailto:<?= e($cfg['site_email'] ?? 'info@abdurrahmankaya.com') ?>" class="btn btn-primary btn-lg">✉️ E-posta Gönder</a>
+        <?php if ($cfg['whatsapp'] ?? ''): ?>
+        <a href="https://wa.me/<?= e(preg_replace('/[^0-9]/', '', $cfg['whatsapp'])) ?>" class="btn btn-outline btn-lg" target="_blank" rel="noopener">💬 WhatsApp</a>
+        <?php else: ?>
         <a href="/blog.php" class="btn btn-outline btn-lg">Blog'u İncele</a>
+        <?php endif; ?>
       </div>
     </div>
   </div>
