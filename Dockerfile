@@ -6,8 +6,8 @@ RUN docker-php-ext-install pdo pdo_mysql mysqli
 # Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# Apache mod_rewrite aktif
-RUN a2enmod rewrite && a2enmod headers
+# Apache modülleri
+RUN a2enmod rewrite headers deflate expires
 
 # Apache: AllowOverride ve güvenlik başlıkları
 RUN echo '<Directory /var/www/html>\n\

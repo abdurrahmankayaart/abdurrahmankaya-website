@@ -9,3 +9,34 @@ RewriteRule ^uploads/.*\.(php|phtml|php3)$ - [F,L]
 
 # 404 sayfası
 ErrorDocument 404 /404.php
+
+# ── Gzip sıkıştırma ─────────────────────────────────
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json application/xml image/svg+xml
+</IfModule>
+
+# ── Browser cache (statik dosyalar) ─────────────────
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/css                  "access plus 1 month"
+  ExpiresByType application/javascript    "access plus 1 month"
+  ExpiresByType image/jpeg                "access plus 3 months"
+  ExpiresByType image/png                 "access plus 3 months"
+  ExpiresByType image/webp                "access plus 3 months"
+  ExpiresByType image/gif                 "access plus 3 months"
+  ExpiresByType image/svg+xml             "access plus 3 months"
+  ExpiresByType font/woff2                "access plus 1 year"
+  ExpiresByType application/font-woff2    "access plus 1 year"
+</IfModule>
+
+# ── Cache-Control ────────────────────────────────────
+<FilesMatch "\.(css|js|jpg|jpeg|png|gif|webp|svg|woff2)$">
+  Header set Cache-Control "public, max-age=2592000, immutable"
+</FilesMatch>
+<FilesMatch "\.(php|html)$">
+  Header set Cache-Control "no-cache, must-revalidate"
+</FilesMatch>
+
+# ── ETag kapat (proxy ortam için) ───────────────────
+FileETag None
+Header unset ETag
