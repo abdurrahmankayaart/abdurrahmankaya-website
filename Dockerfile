@@ -3,6 +3,9 @@ FROM php:8.2-apache
 # PHP eklentileri
 RUN docker-php-ext-install pdo pdo_mysql mysqli
 
+# Composer
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+
 # Apache mod_rewrite aktif
 RUN a2enmod rewrite && a2enmod headers
 
@@ -22,6 +25,10 @@ RUN mkdir -p /var/www/html/uploads && chmod 777 /var/www/html/uploads
 
 # Uygulama dosyaları
 COPY html/ /var/www/html/
+
+# Composer bağımlılıkları
+WORKDIR /var/www/html
+RUN composer install --no-dev --optimize-autoloader --no-interaction 2>/dev/null || true
 
 # config.php uploads dışındaki dosyaları oku-yaz yap
 RUN find /var/www/html -type f -name "*.php" -exec chmod 644 {} \; \

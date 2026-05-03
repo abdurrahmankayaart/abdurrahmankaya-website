@@ -126,3 +126,36 @@ function escHtml(str) {
 }
 
 loadLatestPosts();
+
+// ── Contact form ──────────────────────────────────────
+const contactForm = document.getElementById('contactForm');
+if (contactForm) {
+  contactForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn    = document.getElementById('cf-submit');
+    const result = document.getElementById('cf-result');
+    btn.disabled = true;
+    btn.textContent = 'Gönderiliyor...';
+    result.style.display = 'none';
+
+    try {
+      const res  = await fetch('/contact.php', { method: 'POST', body: new FormData(contactForm) });
+      const data = await res.json();
+      result.style.display = 'block';
+      if (data.success) {
+        result.className = 'alert alert-success';
+        result.textContent = data.message || 'Mesajınız alındı!';
+        contactForm.reset();
+      } else {
+        result.className = 'alert alert-danger';
+        result.textContent = data.error || 'Bir hata oluştu.';
+      }
+    } catch {
+      result.style.display = 'block';
+      result.className = 'alert alert-danger';
+      result.textContent = 'Bağlantı hatası. Lütfen tekrar deneyin.';
+    }
+    btn.disabled = false;
+    btn.textContent = 'Mesaj Gönder ✉️';
+  });
+}

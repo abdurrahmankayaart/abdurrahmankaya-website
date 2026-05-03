@@ -217,19 +217,70 @@ $skills = array_filter(array_map('trim', explode(',', $cfg['skills'] ?? '')));
 <?php endif; ?>
 
 <!-- ── İletişim ── -->
-<section id="iletisim" class="section-sm">
+<section id="iletisim" class="section" style="background:var(--bg2)">
   <div class="container">
-    <div class="cta-section" data-reveal>
-      <h2>Projenizi Hayata Geçirelim</h2>
-      <p>Fikrinizi güçlü bir dijital ürüne dönüştürmek için hemen iletişime geçin.</p>
-      <div class="cta-actions">
-        <a href="mailto:<?= e($cfg['site_email'] ?? 'info@abdurrahmankaya.com') ?>" class="btn btn-primary btn-lg">✉️ E-posta Gönder</a>
-        <?php if ($cfg['whatsapp'] ?? ''): ?>
-        <a href="https://wa.me/<?= e(preg_replace('/[^0-9]/', '', $cfg['whatsapp'])) ?>" class="btn btn-outline btn-lg" target="_blank" rel="noopener">💬 WhatsApp</a>
-        <?php else: ?>
-        <a href="/blog.php" class="btn btn-outline btn-lg">Blog'u İncele</a>
+    <div class="section-header">
+      <span class="badge badge-accent" data-reveal>İletişim</span>
+      <h2 data-reveal>Projenizi Hayata Geçirelim</h2>
+      <p data-reveal>Fikrinizi güçlü bir dijital ürüne dönüştürmek için hemen iletişime geçin.</p>
+    </div>
+    <div class="contact-grid" data-reveal>
+      <div class="contact-info">
+        <?php if ($cfg['site_email'] ?? ''): ?>
+        <div class="contact-item">
+          <div class="contact-icon">✉️</div>
+          <div><strong>E-posta</strong><br><a href="mailto:<?= e($cfg['site_email']) ?>"><?= e($cfg['site_email']) ?></a></div>
+        </div>
         <?php endif; ?>
+        <?php if ($cfg['phone'] ?? ''): ?>
+        <div class="contact-item">
+          <div class="contact-icon">📞</div>
+          <div><strong>Telefon</strong><br><a href="tel:<?= e(preg_replace('/\s/', '', $cfg['phone'])) ?>"><?= e($cfg['phone']) ?></a></div>
+        </div>
+        <?php endif; ?>
+        <?php if ($cfg['whatsapp'] ?? ''): ?>
+        <div class="contact-item">
+          <div class="contact-icon">💬</div>
+          <div><strong>WhatsApp</strong><br><a href="https://wa.me/<?= e(preg_replace('/[^0-9]/', '', $cfg['whatsapp'])) ?>" target="_blank" rel="noopener">Mesaj Gönder</a></div>
+        </div>
+        <?php endif; ?>
+        <?php if ($cfg['address'] ?? ''): ?>
+        <div class="contact-item">
+          <div class="contact-icon">📍</div>
+          <div><strong>Konum</strong><br><?= e($cfg['address']) ?></div>
+        </div>
+        <?php endif; ?>
+        <div class="contact-social">
+          <?php if ($cfg['linkedin']  ?? ''): ?><a href="<?= e($cfg['linkedin'])  ?>" class="social-link" target="_blank" rel="noopener" aria-label="LinkedIn">in</a><?php endif; ?>
+          <?php if ($cfg['github']    ?? ''): ?><a href="<?= e($cfg['github'])    ?>" class="social-link" target="_blank" rel="noopener" aria-label="GitHub">gh</a><?php endif; ?>
+          <?php if ($cfg['twitter']   ?? ''): ?><a href="<?= e($cfg['twitter'])   ?>" class="social-link" target="_blank" rel="noopener" aria-label="Twitter">𝕏</a><?php endif; ?>
+          <?php if ($cfg['instagram'] ?? ''): ?><a href="<?= e($cfg['instagram']) ?>" class="social-link" target="_blank" rel="noopener" aria-label="Instagram">📷</a><?php endif; ?>
+        </div>
       </div>
+
+      <form class="contact-form" id="contactForm" novalidate>
+        <input type="text" name="website" style="display:none" tabindex="-1" autocomplete="off">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="cf-name">Ad Soyad *</label>
+            <input type="text" id="cf-name" name="name" class="form-control" required placeholder="Adınız Soyadınız">
+          </div>
+          <div class="form-group">
+            <label for="cf-email">E-posta *</label>
+            <input type="email" id="cf-email" name="email" class="form-control" required placeholder="ornek@email.com">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="cf-subject">Konu</label>
+          <input type="text" id="cf-subject" name="subject" class="form-control" placeholder="Proje danışmanlığı, iş birliği...">
+        </div>
+        <div class="form-group">
+          <label for="cf-message">Mesajınız *</label>
+          <textarea id="cf-message" name="message" class="form-control" rows="5" required placeholder="Projenizi ve ihtiyaçlarınızı anlatın..."></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary btn-lg" id="cf-submit">Mesaj Gönder ✉️</button>
+        <div id="cf-result" style="margin-top:1rem;display:none"></div>
+      </form>
     </div>
   </div>
 </section>
