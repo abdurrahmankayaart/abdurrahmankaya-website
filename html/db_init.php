@@ -28,11 +28,11 @@ $sqls = [
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci",
 
 "CREATE TABLE IF NOT EXISTS settings (
-  \`key\`   VARCHAR(100) PRIMARY KEY,
-  \`value\` TEXT
+  `key`   VARCHAR(100) PRIMARY KEY,
+  `value` TEXT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci",
 
-"INSERT IGNORE INTO settings (\`key\`, \`value\`) VALUES
+"INSERT IGNORE INTO settings (`key`, `value`) VALUES
   ('site_name',    'Abdurrahman Kaya'),
   ('site_title',   'Yazılım Geliştirici & Teknoloji Danışmanı'),
   ('site_desc',    'Modern teknolojilerle güçlü dijital çözümler üretiyorum.'),
