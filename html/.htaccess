@@ -3,7 +3,7 @@ RewriteEngine On
 
 # ── HSTS (Chrome'a daima HTTPS kullan) ──────────────
 <IfModule mod_headers.c>
-  Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+  Header always set Strict-Transport-Security "max-age=31536000"
 </IfModule>
 
 # Blog post temiz URL: /blog/slug → /post.php?slug=slug
