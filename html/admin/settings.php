@@ -6,12 +6,20 @@ $success = '';
 $error   = '';
 
 // Profil fotoğrafı yükleme
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    csrf_verify();
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['hero_photo_file'])) {
     $file = $_FILES['hero_photo_file'];
     if ($file['size'] > 0) {
-        $ext     = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
-        $allowed = ['jpg','jpeg','png','gif','webp'];
-        if (!in_array($ext, $allowed)) {
+        $ext          = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+        $allowed_ext  = ['jpg','jpeg','png','gif','webp'];
+        $allowed_mime = ['image/jpeg','image/png','image/gif','image/webp'];
+        $finfo = finfo_open(FILEINFO_MIME_TYPE);
+        $mime  = finfo_file($finfo, $file['tmp_name']);
+        finfo_close($finfo);
+        if (!in_array($ext, $allowed_ext) || !in_array($mime, $allowed_mime)) {
             $error = 'Desteklenmeyen görsel formatı';
         } elseif ($file['size'] > 10 * 1024 * 1024) {
             $error = 'Dosya çok büyük (max 10MB)';
@@ -74,6 +82,7 @@ $cfg = get_all_settings();
     <div class="editor-wrap" style="margin-bottom:1.5rem">
       <h2 style="margin-bottom:1.25rem">Profil / Hero Fotoğrafı</h2>
       <form method="POST" enctype="multipart/form-data" style="display:flex;align-items:flex-start;gap:1.5rem;flex-wrap:wrap">
+        <?= csrf_field() ?>
         <?php if ($cfg['hero_photo'] ?? ''): ?>
           <img src="<?= e($cfg['hero_photo']) ?>" style="width:100px;height:100px;border-radius:50%;object-fit:cover;border:2px solid var(--border)">
         <?php else: ?>
@@ -91,6 +100,7 @@ $cfg = get_all_settings();
 
     <!-- Site Bilgileri -->
     <form method="POST">
+      <?= csrf_field() ?>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem">
 
         <div class="editor-wrap" style="grid-column:1/-1">

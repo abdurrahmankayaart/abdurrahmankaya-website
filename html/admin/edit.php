@@ -17,6 +17,7 @@ if ($id) {
 
 // Kaydet
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    csrf_verify();
     $title       = trim($_POST['title']      ?? '');
     $content     = $_POST['content']         ?? '';
     $excerpt     = trim($_POST['excerpt']    ?? '');
@@ -41,10 +42,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $stmt2->execute([$id]);
                 $post = $stmt2->fetch();
             } else {
-                $slug     = slugify($title);
-                $base     = $slug;
-                $counter  = 1;
-                while (db()->prepare("SELECT id FROM posts WHERE slug=?")->execute([$slug]) && db()->query("SELECT id FROM posts WHERE slug='$slug'")->fetchColumn()) {
+                $slug    = slugify($title);
+                $base    = $slug;
+                $counter = 1;
+                $chk     = db()->prepare("SELECT id FROM posts WHERE slug=?");
+                while (true) {
+                    $chk->execute([$slug]);
+                    if (!$chk->fetchColumn()) break;
                     $slug = "$base-$counter";
                     $counter++;
                 }
@@ -69,9 +73,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['image'])) {
     header('Content-Type: application/json');
     $file = $_FILES['image'];
     $ext  = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
-    $allowed = ['jpg','jpeg','png','gif','webp'];
-    if (!in_array($ext, $allowed)) { echo json_encode(['error'=>'Desteklenmeyen format']); exit; }
+    $allowed_ext  = ['jpg','jpeg','png','gif','webp'];
+    $allowed_mime = ['image/jpeg','image/png','image/gif','image/webp'];
+    if (!in_array($ext, $allowed_ext)) { echo json_encode(['error'=>'Desteklenmeyen format']); exit; }
     if ($file['size'] > 10 * 1024 * 1024) { echo json_encode(['error'=>'Dosya çok büyük (max 10MB)']); exit; }
+    $finfo = finfo_open(FILEINFO_MIME_TYPE);
+    $mime  = finfo_file($finfo, $file['tmp_name']);
+    finfo_close($finfo);
+    if (!in_array($mime, $allowed_mime)) { echo json_encode(['error'=>'Geçersiz dosya içeriği']); exit; }
     $name = uniqid('img_') . '.' . $ext;
     $dest = __DIR__ . '/../uploads/' . $name;
     if (move_uploaded_file($file['tmp_name'], $dest)) {
@@ -116,6 +125,7 @@ try {
     <?php if (isset($_GET['saved'])): ?><div class="alert alert-success">Yazı başarıyla oluşturuldu!</div><?php endif; ?>
 
     <form method="POST" class="editor-wrap">
+      <?= csrf_field() ?>
       <div class="editor-grid">
         <!-- Sol: İçerik -->
         <div>
@@ -234,8 +244,9 @@ async function uploadFile(file) {
   statusEl.textContent = '⏳ Yükleniyor...';
   const fd = new FormData();
   fd.append('image', file);
+  const csrfToken = document.querySelector('input[name="csrf_token"]').value;
   try {
-    const res  = await fetch('/admin/edit.php', { method:'POST', body: fd });
+    const res  = await fetch('/admin/edit.php', { method:'POST', body: fd, headers:{'X-CSRF-Token': csrfToken} });
     const data = await res.json();
     if (data.url) {
       coverInput.value = data.url;

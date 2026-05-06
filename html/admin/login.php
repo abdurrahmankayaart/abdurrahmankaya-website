@@ -8,6 +8,7 @@ if (is_admin()) {
 
 $error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    csrf_verify();
     // Rate limiting: 10 dakikada 5 başarısız deneme
     $now     = time();
     $attempts = $_SESSION['login_attempts'] ?? [];
@@ -52,6 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <div class="alert alert-danger"><?= e($error) ?></div>
     <?php endif; ?>
     <form method="POST">
+      <?= csrf_field() ?>
       <div class="form-group">
         <label for="password">Şifre</label>
         <input type="password" id="password" name="password" class="form-control <?= $error ? 'error' : '' ?>" placeholder="••••••••" autofocus required>
