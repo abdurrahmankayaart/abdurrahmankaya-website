@@ -20,6 +20,10 @@ Header always set X-XSS-Protection "1; mode=block"' \
     > /etc/apache2/conf-available/site.conf \
     && a2enconf site
 
+# PHP upload limitleri
+RUN echo "upload_max_filesize=20M\npost_max_size=22M\nmemory_limit=128M" \
+    > /usr/local/etc/php/conf.d/uploads.ini
+
 # Kalıcı uploads klasörü (Coolify volume ile mount edilir)
 RUN mkdir -p /var/www/html/uploads && chmod 777 /var/www/html/uploads
 
