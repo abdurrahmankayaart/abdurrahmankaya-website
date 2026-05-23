@@ -8,6 +8,7 @@ if (is_admin()) {
 
 $error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    csrf_verify();
     // Rate limiting: 10 dakikada 5 başarısız deneme
     $now     = time();
     $attempts = $_SESSION['login_attempts'] ?? [];
@@ -38,6 +39,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Girişi</title>
   <meta name="robots" content="noindex,nofollow">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#080810">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/style.css">
@@ -52,6 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <div class="alert alert-danger"><?= e($error) ?></div>
     <?php endif; ?>
     <form method="POST">
+      <?= csrf_field() ?>
       <div class="form-group">
         <label for="password">Şifre</label>
         <input type="password" id="password" name="password" class="form-control <?= $error ? 'error' : '' ?>" placeholder="••••••••" autofocus required>

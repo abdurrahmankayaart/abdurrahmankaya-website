@@ -24,9 +24,9 @@ $hits[] = $now;
 $_SESSION['contact_hits'] = $hits;
 
 // Input doğrulama
-$name    = trim($_POST['name']    ?? '');
+$name    = str_replace(["\r", "\n"], '', trim($_POST['name']    ?? ''));
 $email   = trim($_POST['email']   ?? '');
-$subject = trim($_POST['subject'] ?? 'İletişim Formu');
+$subject = str_replace(["\r", "\n"], '', trim($_POST['subject'] ?? 'İletişim Formu'));
 $message = trim($_POST['message'] ?? '');
 
 if (!$name || !$email || !$message) {

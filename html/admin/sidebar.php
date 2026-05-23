@@ -5,7 +5,9 @@ function nav_item(string $href, string $icon, string $label, string $current): s
     return "<a href='$href' class='admin-nav-item $active'>$icon $label</a>";
 }
 ?>
-<aside class="admin-sidebar">
+<button class="admin-mobile-toggle" id="adminSidebarToggle" aria-label="Menüyü aç">☰</button>
+<div class="admin-sidebar-overlay" id="adminOverlay"></div>
+<aside class="admin-sidebar" id="adminSidebar">
   <div class="admin-sidebar-logo">
     <div class="logo-main">AK Admin</div>
     <div class="logo-sub">abdurrahmankaya.com</div>
