@@ -2,4 +2,5 @@ User-agent: *
 Allow: /
 Disallow: /admin/
 Disallow: /config.php
+Disallow: /uploads/
 Sitemap: https://abdurrahmankaya.com/sitemap.php
