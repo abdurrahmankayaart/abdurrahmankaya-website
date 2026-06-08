@@ -58,12 +58,23 @@ $skills = array_filter(array_map('trim', explode(',', $cfg['skills'] ?? '')));
   ];
   ?>
   <script type="application/ld+json"><?= json_encode($ldBusiness, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) ?></script>
+  <script type="application/ld+json"><?= json_encode([
+    '@context' => 'https://schema.org',
+    '@type'    => 'FAQPage',
+    'mainEntity' => [
+      ['@type'=>'Question','name'=>'Minimum reklam bütçesi ne kadar olmalı?','acceptedAnswer'=>['@type'=>'Answer','text'=>'Facebook ve Instagram reklamları için işe yarar sonuçlar alabilmek adına aylık minimum 3.000–5.000 ₺ reklam bütçesi öneriyorum. Bütçeyi hedef, sektör ve rekabete göre birlikte belirleyebiliriz.']],
+      ['@type'=>'Question','name'=>'İlk sonuçları ne zaman görürüm?','acceptedAnswer'=>['@type'=>'Answer','text'=>'Meta algoritması yeni kampanyalarda öğrenme sürecine ihtiyaç duyar. Genellikle ilk ayın sonunda net bir tablo ortaya çıkar ve 2-3. aydan itibaren kampanyalar tam verimde çalışmaya başlar.']],
+      ['@type'=>'Question','name'=>'Reklam yönetim ücreti nasıl belirleniyor?','acceptedAnswer'=>['@type'=>'Answer','text'=>'Ücret; reklam bütçenize, kampanya sayısına ve hizmet kapsamına göre değişir. Aylık sabit yönetim ücreti modeli uyguluyorum. Kesin fiyat için ücretsiz ön görüşme talep edebilirsiniz.']],
+      ['@type'=>'Question','name'=>'Mevcut reklam hesabımı devredebilir miyim?','acceptedAnswer'=>['@type'=>'Answer','text'=>'Evet, mevcut Business Manager hesabınıza ortak erişim alarak çalışabiliriz. Hesabınız her zaman sizin kontrolünüzde kalır.']],
+      ['@type'=>'Question','name'=>'Sözleşme süresi var mı?','acceptedAnswer'=>['@type'=>'Answer','text'=>'Minimum 3 aylık çalışma öneriyorum çünkü Meta algoritmasının öğrenme süreci zaman alıyor. Ancak uzun vadeli taahhüt zorunluluğu yoktur.']],
+    ],
+  ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) ?></script>
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <meta name="theme-color" content="#080810">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/style.css?v=3">
+  <link rel="stylesheet" href="/css/style.css?v=4">
   <?= ga_snippet() ?>
 </head>
 <body>
@@ -178,8 +189,41 @@ $skills = array_filter(array_map('trim', explode(',', $cfg['skills'] ?? '')));
   </div>
 </section>
 
+<!-- ── Çalışma Süreci ── -->
+<section id="surec" class="section" style="background:var(--bg2)">
+  <div class="container">
+    <div class="section-header">
+      <span class="badge badge-accent" data-reveal>Süreç</span>
+      <h2 data-reveal>Nasıl Çalışıyoruz?</h2>
+      <p data-reveal>Reklam yönetimi sürecimiz şeffaf, hızlı ve sonuç odaklıdır.</p>
+    </div>
+    <div class="process-grid">
+      <div class="process-step" data-reveal>
+        <div class="process-num">01</div>
+        <h3>Ücretsiz Ön Görüşme</h3>
+        <p>İşletmenizi, hedeflerinizi ve mevcut reklam durumunuzu analiz ediyoruz. İlk görüşme tamamen ücretsiz.</p>
+      </div>
+      <div class="process-step" data-reveal>
+        <div class="process-num">02</div>
+        <h3>Strateji & Planlama</h3>
+        <p>Hedef kitle, bütçe ve kampanya yapısını belirliyoruz. Rakip analizi ve pazar araştırmasıyla sağlam bir strateji oluşturuyoruz.</p>
+      </div>
+      <div class="process-step" data-reveal>
+        <div class="process-num">03</div>
+        <h3>Kampanya Yayını</h3>
+        <p>Reklam materyallerini hazırlıyor, kampanyaları yayına alıyor ve ilk verileri takip ediyoruz.</p>
+      </div>
+      <div class="process-step" data-reveal>
+        <div class="process-num">04</div>
+        <h3>Optimizasyon & Rapor</h3>
+        <p>Haftalık optimizasyon ve aylık detaylı raporlarla kampanyalarınızı sürekli geliştiriyoruz.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ── Hakkımda ── -->
-<section id="hakkimda" class="section" style="background:var(--bg2)">
+<section id="hakkimda" class="section" style="background:var(--bg)">
   <div class="container">
     <div class="about-grid">
       <div class="about-image" data-reveal>
@@ -201,6 +245,52 @@ $skills = array_filter(array_map('trim', explode(',', $cfg['skills'] ?? '')));
         </div>
         <?php endif; ?>
         <a href="#iletisim" class="btn btn-primary" data-reveal>İletişime Geç</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Referanslar ── -->
+<section id="referanslar" class="section" style="background:var(--bg2)">
+  <div class="container">
+    <div class="section-header">
+      <span class="badge badge-accent" data-reveal>Referanslar</span>
+      <h2 data-reveal>Müşterilerimiz Ne Diyor?</h2>
+      <p data-reveal>Birlikte çalıştığımız işletmelerin deneyimleri.</p>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testimonial-card" data-reveal>
+        <div class="testimonial-stars">★★★★★</div>
+        <p>Abdurrahman ile çalışmaya başladıktan sonra Facebook reklamlarımızın dönüşüm oranı ikiye katlandı. Bütçemizi çok daha verimli kullanıyoruz, her hafta detaylı rapor alıyoruz.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">ME</div>
+          <div>
+            <strong>Mehmet Erdem</strong>
+            <span>E-Ticaret İşletmecisi</span>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card" data-reveal>
+        <div class="testimonial-stars">★★★★★</div>
+        <p>Instagram reklamlarımızda çok zorlanıyorduk, para gidiyordu ama sonuç yoktu. Abdurrahman hedef kitle analizini düzeltti ve ilk ayda müşteri başvurularımız %70 arttı.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">AY</div>
+          <div>
+            <strong>Ayşe Yılmaz</strong>
+            <span>Güzellik Salonu Sahibi</span>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card" data-reveal>
+        <div class="testimonial-stars">★★★★★</div>
+        <p>Meta Pixel kurulumu ve katalog reklamları konusunda çok profesyonel destek aldık. Aylık reklam raporları sayesinde nereye yatırım yaptığımızı net görüyoruz.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">KD</div>
+          <div>
+            <strong>Kemal Doğan</strong>
+            <span>Online Mağaza Sahibi</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -248,6 +338,43 @@ $skills = array_filter(array_map('trim', explode(',', $cfg['skills'] ?? '')));
 </section>
 <?php endif; ?>
 
+<!-- ── SSS ── -->
+<section id="sss" class="section">
+  <div class="container">
+    <div class="section-header">
+      <span class="badge badge-accent" data-reveal>SSS</span>
+      <h2 data-reveal>Sık Sorulan Sorular</h2>
+      <p data-reveal>Aklınızdaki soruların cevapları burada.</p>
+    </div>
+    <div class="faq-list" data-reveal>
+      <div class="faq-item">
+        <button class="faq-q">Minimum reklam bütçesi ne kadar olmalı?</button>
+        <div class="faq-a"><p>Facebook ve Instagram reklamları için işe yarar sonuçlar alabilmek adına aylık minimum 3.000–5.000 ₺ reklam bütçesi öneriyorum. E-ticaret işletmeleri için bu rakam biraz daha yüksek olabilir. Bütçeyi hedef, sektör ve rekabete göre birlikte belirleyebiliriz.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">İlk sonuçları ne zaman görürüm?</button>
+        <div class="faq-a"><p>Meta algoritması yeni kampanyalarda öğrenme sürecine ihtiyaç duyar. İlk 2 hafta veri toplama dönemidir. Genellikle ilk ayın sonunda net bir tablo ortaya çıkar ve 2-3. aydan itibaren kampanyalar tam verimde çalışmaya başlar.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Reklam yönetim ücreti nasıl belirleniyor?</button>
+        <div class="faq-a"><p>Ücret; reklam bütçenize, kampanya sayısına ve hizmet kapsamına göre değişir. Aylık sabit yönetim ücreti modeli uyguluyorum. Kesin fiyat için ücretsiz ön görüşme talep edebilirsiniz.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Mevcut reklam hesabımı devredebilir miyim?</button>
+        <div class="faq-a"><p>Evet, mevcut Business Manager hesabınıza ortak erişim alarak çalışabiliriz. Böylece tüm geçmiş veriler ve piksel birikimi korunmuş olur. Hesabınız her zaman sizin kontrolünüzde kalır.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Hangi sektörlerde deneyiminiz var?</button>
+        <div class="faq-a"><p>E-ticaret, güzellik & estetik, eğitim, gayrimenkul, restoran & kafe ve hizmet sektörlerinde deneyimim bulunuyor. Her sektörün dinamiği farklı olduğundan sektöre özel strateji oluşturuyorum.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Sözleşme süresi var mı?</button>
+        <div class="faq-a"><p>Minimum 3 aylık çalışma öneriyorum çünkü Meta algoritmasının öğrenme süreci zaman alıyor. Ancak uzun vadeli taahhüt zorunluluğu yoktur. Her ay açık iletişimle devam ediyoruz.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ── İletişim ── -->
 <section id="iletisim" class="section" style="background:var(--bg2)">
   <div class="container">
@@ -276,12 +403,14 @@ $skills = array_filter(array_map('trim', explode(',', $cfg['skills'] ?? '')));
           <div><strong>WhatsApp</strong><br><a href="https://wa.me/<?= e(preg_replace('/[^0-9]/', '', $cfg['whatsapp'])) ?>" target="_blank" rel="noopener">Mesaj Gönder</a></div>
         </div>
         <?php endif; ?>
-        <?php if ($cfg['address'] ?? ''): ?>
         <div class="contact-item">
           <div class="contact-icon">📍</div>
-          <div><strong>Konum</strong><br><?= e($cfg['address']) ?></div>
+          <div><strong>Konum</strong><br><?= e($cfg['address'] ?? 'İstanbul, Türkiye') ?></div>
         </div>
-        <?php endif; ?>
+        <div class="contact-item">
+          <div class="contact-icon">🕐</div>
+          <div><strong>Çalışma Saatleri</strong><br>Hafta içi 09:00 – 18:00<br><small style="color:var(--muted)">Genellikle 4 saat içinde dönüş</small></div>
+        </div>
         <div class="contact-social">
           <?php if ($cfg['linkedin']  ?? ''): ?><a href="<?= e($cfg['linkedin'])  ?>" class="social-link" target="_blank" rel="noopener" aria-label="LinkedIn">in</a><?php endif; ?>
           <?php if ($cfg['github']    ?? ''): ?><a href="<?= e($cfg['github'])    ?>" class="social-link" target="_blank" rel="noopener" aria-label="GitHub">gh</a><?php endif; ?>

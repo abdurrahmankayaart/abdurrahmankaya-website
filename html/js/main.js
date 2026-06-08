@@ -123,3 +123,15 @@ if (contactForm) {
     btn.textContent = 'Mesaj Gönder ✉️';
   });
 }
+
+// ── FAQ Accordion ─────────────────────────────────────
+document.querySelectorAll('.faq-q').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const item = btn.closest('.faq-item');
+    const isOpen = item.classList.contains('open');
+    // Hepsini kapat
+    document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
+    // Tıklananı aç (eğer kapalıysa)
+    if (!isOpen) item.classList.add('open');
+  });
+});
