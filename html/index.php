@@ -409,7 +409,7 @@ $skills = array_filter(array_map('trim', explode(',', $cfg['skills'] ?? '')));
         </div>
         <div class="contact-item">
           <div class="contact-icon">🕐</div>
-          <div><strong>Çalışma Saatleri</strong><br>Hafta içi 09:00 – 18:00<br><small style="color:var(--muted)">Genellikle 4 saat içinde dönüş</small></div>
+          <div><strong>Çalışma Saatleri</strong><br>Hafta içi 09:00 – 18:00</div>
         </div>
         <div class="contact-social">
           <?php if ($cfg['linkedin']  ?? ''): ?><a href="<?= e($cfg['linkedin'])  ?>" class="social-link" target="_blank" rel="noopener" aria-label="LinkedIn">in</a><?php endif; ?>
