@@ -40,18 +40,18 @@ $site_name = $cfg['site_name'] ?? 'Abdurrahman Kaya';
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Blog — <?= e($site_name) ?></title>
-  <meta name="description" content="<?= e($site_name) ?> blog — teknoloji, yazılım ve dijital dönüşüm yazıları.">
+  <title>Blog — Facebook & Meta Reklam Danışmanlığı | <?= e($site_name) ?></title>
+  <meta name="description" content="Facebook reklamcılığı, Meta Ads optimizasyonu, Instagram reklamları ve dijital pazarlama hakkında pratik rehberler ve ipuçları. <?= e($site_name) ?> blogu.">
   <link rel="canonical" href="<?= SITE_URL ?>/blog.php">
   <meta property="og:type"        content="website">
   <meta property="og:site_name"   content="<?= e($site_name) ?>">
-  <meta property="og:title"       content="Blog — <?= e($site_name) ?>">
-  <meta property="og:description" content="Teknoloji ve yazılım geliştirme hakkında içgörüler.">
+  <meta property="og:title"       content="Blog — Facebook & Meta Reklam Danışmanlığı | <?= e($site_name) ?>">
+  <meta property="og:description" content="Facebook reklamcılığı, Meta Ads optimizasyonu ve dijital pazarlama hakkında pratik rehberler.">
   <meta property="og:url"         content="<?= SITE_URL ?>/blog.php">
   <?php if ($cfg['hero_photo'] ?? ''): ?><meta property="og:image" content="<?= SITE_URL . e($cfg['hero_photo']) ?>"><?php endif; ?>
   <meta name="twitter:card"        content="summary_large_image">
-  <meta name="twitter:title"       content="Blog — <?= e($site_name) ?>">
-  <meta name="twitter:description" content="Teknoloji ve yazılım geliştirme hakkında içgörüler.">
+  <meta name="twitter:title"       content="Blog — Facebook & Meta Reklam Danışmanlığı | <?= e($site_name) ?>">
+  <meta name="twitter:description" content="Facebook reklamcılığı, Meta Ads optimizasyonu ve dijital pazarlama hakkında pratik rehberler.">
   <?php if ($cfg['hero_photo'] ?? ''): ?><meta name="twitter:image" content="<?= SITE_URL . e($cfg['hero_photo']) ?>"><?php endif; ?>
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <meta name="theme-color" content="#080810">
@@ -91,8 +91,8 @@ $site_name = $cfg['site_name'] ?? 'Abdurrahman Kaya';
   <div class="blog-hero">
     <div class="container">
       <span class="badge badge-accent">Blog</span>
-      <h1 style="margin-top:.75rem">Dijital İçgörüler</h1>
-      <p>Teknoloji, yazılım geliştirme ve dijital dönüşüm üzerine yazılar.</p>
+      <h1 style="margin-top:.75rem">Facebook & Meta Reklam Blogu</h1>
+      <p>Meta Ads, Facebook reklamcılığı ve dijital pazarlama üzerine pratik rehberler.</p>
     </div>
   </div>
 

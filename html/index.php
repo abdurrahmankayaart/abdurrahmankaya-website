@@ -42,6 +42,22 @@ $skills = array_filter(array_map('trim', explode(',', $cfg['skills'] ?? '')));
   if ($hero_photo) $ldPerson['image'] = SITE_URL . $hero_photo;
   ?>
   <script type="application/ld+json"><?= json_encode($ldPerson, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) ?></script>
+  <?php
+  $ldBusiness = [
+    '@context'        => 'https://schema.org',
+    '@type'           => 'ProfessionalService',
+    'name'            => $site_name . ' — Meta Reklam Danışmanlığı',
+    'url'             => SITE_URL,
+    'description'     => 'Facebook ve Instagram reklam yönetimi, Meta Ads optimizasyonu ve dijital pazarlama danışmanlığı.',
+    'areaServed'      => 'TR',
+    'serviceType'     => ['Facebook Reklam Yönetimi','Instagram Reklamcılığı','Meta Ads Danışmanlığı','E-Ticaret Reklamları'],
+    'priceRange'      => '₺₺',
+    'telephone'       => $cfg['phone'] ?? '',
+    'email'           => $cfg['site_email'] ?? '',
+    'sameAs'          => array_values(array_filter([$cfg['instagram'] ?? '', $cfg['linkedin'] ?? ''])),
+  ];
+  ?>
+  <script type="application/ld+json"><?= json_encode($ldBusiness, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) ?></script>
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <meta name="theme-color" content="#080810">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -87,7 +103,7 @@ $skills = array_filter(array_map('trim', explode(',', $cfg['skills'] ?? '')));
           <span class="hero-badge-dot"></span>
           <?= e($site_title) ?>
         </div>
-        <h1 class="animate-up delay-1"><?= e($cfg['hero_title'] ?? 'Dijital Dönüşümde Güvenilir Partneriniz') ?></h1>
+        <h1 class="animate-up delay-1"><?= e($cfg['hero_title'] ?? 'Facebook & Meta Reklam Uzmanı') ?></h1>
         <p class="hero-desc animate-up delay-2"><?= e($cfg['hero_subtitle'] ?? '') ?></p>
         <div class="hero-actions animate-up delay-3">
           <a href="#hizmetler" class="btn btn-primary btn-lg">Hizmetleri Keşfet</a>
@@ -197,7 +213,7 @@ $skills = array_filter(array_map('trim', explode(',', $cfg['skills'] ?? '')));
     <div class="section-header">
       <span class="badge badge-accent" data-reveal>Blog</span>
       <h2 data-reveal>Son Yazılar</h2>
-      <p data-reveal>Teknoloji, yazılım ve dijital dönüşüm hakkında içgörüler.</p>
+      <p data-reveal>Facebook & Instagram reklamcılığı, Meta Ads stratejileri ve dijital pazarlama hakkında pratik içgörüler.</p>
     </div>
     <div class="blog-grid">
       <?php foreach ($posts as $p): ?>
@@ -237,8 +253,8 @@ $skills = array_filter(array_map('trim', explode(',', $cfg['skills'] ?? '')));
   <div class="container">
     <div class="section-header">
       <span class="badge badge-accent" data-reveal>İletişim</span>
-      <h2 data-reveal>Projenizi Hayata Geçirelim</h2>
-      <p data-reveal>Fikrinizi güçlü bir dijital ürüne dönüştürmek için hemen iletişime geçin.</p>
+      <h2 data-reveal>Reklam Danışmanlığı İçin İletişime Geçin</h2>
+      <p data-reveal>Facebook ve Instagram reklamlarınız için ücretsiz ön görüşme talep edin. Hemen iletişime geçelim.</p>
     </div>
     <div class="contact-grid" data-reveal>
       <div class="contact-info">
