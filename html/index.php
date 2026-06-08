@@ -131,31 +131,31 @@ $skills = array_filter(array_map('trim', explode(',', $cfg['skills'] ?? '')));
     <div class="section-header">
       <span class="badge badge-accent" data-reveal>Hizmetler</span>
       <h2 data-reveal>Size Nasıl Yardımcı Olabilirim?</h2>
-      <p data-reveal>İşletmenizin dijital dönüşümünü hızlandırmak için ihtiyaç duyduğunuz teknik hizmetler.</p>
+      <p data-reveal>Facebook ve Instagram reklamlarınızı profesyonel bir şekilde yöneterek işletmenizi büyütüyorum.</p>
     </div>
     <div class="services-grid">
       <div class="service-card" data-reveal>
-        <div class="service-icon">🌐</div>
-        <h3>Web Geliştirme</h3>
-        <p>PHP, React ve modern teknolojilerle hızlı, güvenli ve ölçeklenebilir web uygulamaları geliştiriyorum.</p>
+        <div class="service-icon">🎯</div>
+        <h3>Meta Reklam Yönetimi</h3>
+        <p>Facebook ve Instagram reklamlarınızı hedef kitleye özel stratejilerle yönetir, bütçenizi en verimli şekilde kullanırım.</p>
         <a href="#iletisim" class="learn-more">Detaylı İncele →</a>
       </div>
       <div class="service-card" data-reveal>
-        <div class="service-icon">📱</div>
-        <h3>Mobil Uygulama</h3>
-        <p>iOS ve Android için native performanslı mobil uygulamalar geliştiriyorum.</p>
+        <div class="service-icon">📊</div>
+        <h3>Reklam Optimizasyonu</h3>
+        <p>Mevcut kampanyalarınızı analiz ederek dönüşüm oranlarını artırır, reklam maliyetlerini düşürürüm.</p>
         <a href="#iletisim" class="learn-more">Detaylı İncele →</a>
       </div>
       <div class="service-card" data-reveal>
-        <div class="service-icon">☁️</div>
-        <h3>Bulut & DevOps</h3>
-        <p>Docker, CI/CD pipeline'ları ve Coolify ile güvenilir sunucu altyapısı kuruyorum.</p>
+        <div class="service-icon">🛍️</div>
+        <h3>E-Ticaret Reklamları</h3>
+        <p>Meta Catalog, Dynamic Ads ve Advantage+ alışveriş kampanyalarıyla e-ticaret satışlarınızı büyütürüm.</p>
         <a href="#iletisim" class="learn-more">Detaylı İncele →</a>
       </div>
       <div class="service-card" data-reveal>
-        <div class="service-icon">🧠</div>
-        <h3>Teknik Danışmanlık</h3>
-        <p>Teknoloji yol haritanızı belirlemenize ve doğru mimari kararlar almanıza yardımcı oluyorum.</p>
+        <div class="service-icon">📈</div>
+        <h3>Strateji & Danışmanlık</h3>
+        <p>İşletmenize özel Meta reklam stratejisi oluşturur, ekibinizi eğitir ve büyüme yol haritanızı çizerim.</p>
         <a href="#iletisim" class="learn-more">Detaylı İncele →</a>
       </div>
     </div>
