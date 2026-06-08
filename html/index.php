@@ -21,6 +21,7 @@ $skills = array_filter(array_map('trim', explode(',', $cfg['skills'] ?? '')));
   <title><?= e($site_name) ?> — <?= e($site_title) ?></title>
   <meta name="description" content="<?= e($site_desc) ?>">
   <meta name="author" content="<?= e($site_name) ?>">
+  <meta name="google-site-verification" content="4IXuDcUOHpejV1x91x0rCQOTmmI1Y-qAeDoB4kc61Ng" />
   <link rel="canonical" href="<?= SITE_URL ?>/">
   <meta property="og:type"        content="website">
   <meta property="og:url"         content="<?= SITE_URL ?>/">
