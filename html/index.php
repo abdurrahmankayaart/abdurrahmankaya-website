@@ -487,3 +487,4 @@ $skills = array_filter(array_map('trim', explode(',', $cfg['skills'] ?? '')));
 <script src="/js/main.js"></script>
 </body>
 </html>
+<!-- webhook test Tue Jun  9 00:08:38 +03 2026 -->
