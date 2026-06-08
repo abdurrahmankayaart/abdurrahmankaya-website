@@ -270,7 +270,7 @@ $skills = array_filter(array_map('trim', explode(',', $cfg['skills'] ?? '')));
           <?php if ($cfg['linkedin']  ?? ''): ?><a href="<?= e($cfg['linkedin'])  ?>" class="social-link" target="_blank" rel="noopener" aria-label="LinkedIn">in</a><?php endif; ?>
           <?php if ($cfg['github']    ?? ''): ?><a href="<?= e($cfg['github'])    ?>" class="social-link" target="_blank" rel="noopener" aria-label="GitHub">gh</a><?php endif; ?>
           <?php if ($cfg['twitter']   ?? ''): ?><a href="<?= e($cfg['twitter'])   ?>" class="social-link" target="_blank" rel="noopener" aria-label="Twitter">𝕏</a><?php endif; ?>
-          <?php if ($cfg['instagram'] ?? ''): ?><a href="<?= e($cfg['instagram']) ?>" class="social-link" target="_blank" rel="noopener" aria-label="Instagram">📷</a><?php endif; ?>
+          <?php if ($cfg['instagram'] ?? ''): ?><a href="<?= e($cfg['instagram']) ?>" class="social-link" target="_blank" rel="noopener" aria-label="Instagram"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a><?php endif; ?>
         </div>
       </div>
 
@@ -333,7 +333,7 @@ $skills = array_filter(array_map('trim', explode(',', $cfg['skills'] ?? '')));
         <?php if ($cfg['linkedin']  ?? ''): ?><a href="<?= e($cfg['linkedin'])  ?>" class="social-link" aria-label="LinkedIn"  target="_blank" rel="noopener">in</a><?php endif; ?>
         <?php if ($cfg['github']    ?? ''): ?><a href="<?= e($cfg['github'])    ?>" class="social-link" aria-label="GitHub"    target="_blank" rel="noopener">gh</a><?php endif; ?>
         <?php if ($cfg['twitter']   ?? ''): ?><a href="<?= e($cfg['twitter'])   ?>" class="social-link" aria-label="Twitter"   target="_blank" rel="noopener">𝕏</a><?php endif; ?>
-        <?php if ($cfg['instagram'] ?? ''): ?><a href="<?= e($cfg['instagram']) ?>" class="social-link" aria-label="Instagram" target="_blank" rel="noopener">📷</a><?php endif; ?>
+        <?php if ($cfg['instagram'] ?? ''): ?><a href="<?= e($cfg['instagram']) ?>" class="social-link" aria-label="Instagram" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a><?php endif; ?>
       </div>
     </div>
   </div>
