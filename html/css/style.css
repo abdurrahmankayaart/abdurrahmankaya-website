@@ -547,8 +547,15 @@ p { color: var(--muted); line-height: 1.75; }
   flex-wrap: wrap;
 }
 .blog-card-meta time {
-  font-size: .75rem;
-  color: var(--dim);
+  font-size: .78rem;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: .3rem;
+}
+.blog-card-meta time::before {
+  content: "📅";
+  font-size: .7rem;
 }
 .blog-card h3 {
   font-size: 1.05rem;
