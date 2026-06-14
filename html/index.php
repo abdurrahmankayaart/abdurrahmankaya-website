@@ -75,7 +75,7 @@ $skills = array_filter(array_map('trim', explode(',', $cfg['skills'] ?? '')));
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/style.css?v=4">
+  <link rel="stylesheet" href="/css/style.css?v=5">
   <?= ga_snippet() ?>
 </head>
 <body>
@@ -149,6 +149,19 @@ $skills = array_filter(array_map('trim', explode(',', $cfg['skills'] ?? '')));
         <div class="hero-float-badge top-right">✅ <?= (int)($cfg['stat_years'] ?? 5) ?>+ Yıl Deneyim</div>
         <div class="hero-float-badge bottom-left">⭐ <?= (int)($cfg['stat_projects'] ?? 50) ?>+ Proje</div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Güven Rozetleri ── -->
+<section class="trust-bar" aria-label="Uzmanlık alanları">
+  <div class="container">
+    <div class="trust-grid">
+      <div class="trust-item" data-reveal><span class="trust-icon">🎯</span><span>Meta Ads Uzmanı</span></div>
+      <div class="trust-item" data-reveal><span class="trust-icon">📘</span><span>Facebook Reklamcılığı</span></div>
+      <div class="trust-item" data-reveal><span class="trust-icon">📸</span><span>Instagram Reklamları</span></div>
+      <div class="trust-item" data-reveal><span class="trust-icon">📊</span><span>Reklam Hesabı Yönetimi</span></div>
+      <div class="trust-item" data-reveal><span class="trust-icon">🚀</span><span>Advantage+ &amp; Andromeda</span></div>
     </div>
   </div>
 </section>

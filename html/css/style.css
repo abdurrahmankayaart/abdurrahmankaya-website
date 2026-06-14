@@ -1340,3 +1340,33 @@ tbody tr:hover td { background: rgba(255,255,255,.02); }
   padding: 0 1.5rem 1.25rem;
 }
 .faq-a p { font-size: .93rem; }
+
+/* ── Güven Rozetleri (Trust Bar) ── */
+.trust-bar {
+  padding: 1.75rem 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: var(--bg2);
+}
+.trust-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem 2.5rem;
+}
+.trust-item {
+  display: inline-flex;
+  align-items: center;
+  gap: .6rem;
+  font-weight: 600;
+  font-size: .95rem;
+  color: var(--text);
+  white-space: nowrap;
+}
+.trust-icon { font-size: 1.35rem; line-height: 1; }
+@media (max-width: 640px) {
+  .trust-grid { gap: .9rem 1.5rem; }
+  .trust-item { font-size: .85rem; }
+  .trust-icon { font-size: 1.15rem; }
+}
