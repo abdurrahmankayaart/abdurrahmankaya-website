@@ -46,5 +46,11 @@ if ($smtp_host && $smtp_user && $smtp_pass && file_exists(__DIR__ . '/vendor/aut
         echo "SONUC: HATA — " . $e->getMessage() . "\n";
     }
 } else {
-    echo "SONUC: SMTP ayarlari eksik, mail gonderilemedi.\n";
+    echo "SMTP yok — PHP mail() ile deneniyor...\n";
+    $headers  = "MIME-Version: 1.0\r\n";
+    $headers .= "Content-type: text/html; charset=UTF-8\r\n";
+    $headers .= "From: Mail Testi <noreply@abdurrahmankaya.com>\r\n";
+    $ok = @mail($to, 'Test - hello kutusu calisiyor mu (mail fallback)', $body, $headers);
+    echo "mail() donus degeri: " . ($ok ? 'true' : 'false') . "\n";
+    echo "SONUC: " . ($ok ? "Sunucu maili kabul etti — Gmail kutunu kontrol et (spam dahil)." : "Sunucuda mail gonderme yok, gonderilemedi.") . "\n";
 }
