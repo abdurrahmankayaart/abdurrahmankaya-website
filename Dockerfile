@@ -1,5 +1,10 @@
 FROM php:8.2-apache
 
+# Sistem araçları (composer paketleri için git + unzip şart)
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends git unzip \
+    && rm -rf /var/lib/apt/lists/*
+
 # PHP eklentileri
 RUN docker-php-ext-install pdo pdo_mysql mysqli
 
@@ -32,7 +37,7 @@ COPY html/ /var/www/html/
 
 # Composer bağımlılıkları
 WORKDIR /var/www/html
-RUN composer install --no-dev --optimize-autoloader --no-interaction 2>/dev/null || true
+RUN composer install --no-dev --optimize-autoloader --no-interaction
 
 # config.php uploads dışındaki dosyaları oku-yaz yap
 RUN find /var/www/html -type f -name "*.php" -exec chmod 644 {} \; \
