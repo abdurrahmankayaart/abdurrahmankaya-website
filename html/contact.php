@@ -77,7 +77,7 @@ if ($smtp_host && $smtp_user && $smtp_pass && file_exists(__DIR__ . '/vendor/aut
         $mail->SMTPSecure = $smtp_port === 465 ? PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_SMTPS : PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port       = $smtp_port;
         $mail->CharSet    = 'UTF-8';
-        $mail->setFrom($smtp_user, get_setting('site_name', 'Abdurrahman Kaya'));
+        $mail->setFrom(get_setting('smtp_from', 'hello@abdurrahmankaya.com'), get_setting('site_name', 'Abdurrahman Kaya'));
         $mail->addAddress($to_email);
         $mail->addReplyTo($email, $name);
         $mail->isHTML(true);
