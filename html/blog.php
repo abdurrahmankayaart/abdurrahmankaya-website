@@ -54,11 +54,11 @@ $site_name = $cfg['site_name'] ?? 'Abdurrahman Kaya';
   <meta name="twitter:description" content="Facebook reklamcılığı, Meta Ads optimizasyonu ve dijital pazarlama hakkında pratik rehberler.">
   <?php if ($cfg['hero_photo'] ?? ''): ?><meta name="twitter:image" content="<?= SITE_URL . e($cfg['hero_photo']) ?>"><?php endif; ?>
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-  <meta name="theme-color" content="#080810">
+  <meta name="theme-color" content="#fbf9f5">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/style.css?v=5">
+  <link rel="stylesheet" href="/css/style.css?v=6">
   <?= ga_snippet() ?>
 </head>
 <body>
