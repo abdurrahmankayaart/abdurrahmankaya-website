@@ -2,6 +2,10 @@
 require_once __DIR__ . '/../config.php';
 require_admin();
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    csrf_verify();
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_id'])) {
     try { db()->prepare("DELETE FROM posts WHERE id=?")->execute([(int)$_POST['delete_id']]); }
     catch (Throwable) {}
@@ -27,9 +31,11 @@ try {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Yazılar — Admin</title>
   <meta name="robots" content="noindex,nofollow">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#080810">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/style.css?v=2">
 </head>
 <body class="admin-body">
 
@@ -61,6 +67,7 @@ try {
             <td><span class="badge badge-muted" style="font-size:.7rem"><?= e($p['category']) ?></span></td>
             <td>
               <form method="POST" style="display:inline">
+                <?= csrf_field() ?>
                 <input type="hidden" name="toggle_id" value="<?= $p['id'] ?>">
                 <button type="submit" class="badge <?= $p['published'] ? 'badge-success' : 'badge-warn' ?>" style="cursor:pointer;border:none;font-size:.75rem">
                   <?= $p['published'] ? 'Yayında' : 'Taslak' ?>
@@ -74,6 +81,7 @@ try {
                 <a href="/admin/edit.php?id=<?= $p['id'] ?>" class="btn btn-ghost btn-sm">Düzenle</a>
                 <a href="/blog/<?= e($p['slug']) ?>" target="_blank" class="btn btn-ghost btn-sm">Gör</a>
                 <form method="POST" onsubmit="return confirm('Silmek istediğinize emin misiniz?')" style="display:inline">
+                  <?= csrf_field() ?>
                   <input type="hidden" name="delete_id" value="<?= $p['id'] ?>">
                   <button type="submit" class="btn btn-sm" style="background:rgba(239,68,68,.15);color:#fca5a5">Sil</button>
                 </form>

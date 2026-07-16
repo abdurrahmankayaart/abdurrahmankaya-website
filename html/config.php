@@ -61,9 +61,37 @@ function read_time(string $content): int {
     return max(1, (int)ceil($words / 200));
 }
 
+function ga_snippet(): string {
+    $id = get_setting('ga_id', '');
+    if (!$id || !preg_match('/^G-[A-Z0-9]+$/', $id)) return '';
+    $id = htmlspecialchars($id, ENT_QUOTES, 'UTF-8');
+    return "<script async src=\"https://www.googletagmanager.com/gtag/js?id=$id\"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','$id');</script>";
+}
+
 function redirect(string $url): void {
     header('Location: ' . $url);
     exit;
+}
+
+function csrf_token(): string {
+    if (session_status() === PHP_SESSION_NONE) session_start();
+    if (empty($_SESSION['csrf'])) {
+        $_SESSION['csrf'] = bin2hex(random_bytes(32));
+    }
+    return $_SESSION['csrf'];
+}
+
+function csrf_field(): string {
+    return '<input type="hidden" name="csrf_token" value="' . csrf_token() . '">';
+}
+
+function csrf_verify(): void {
+    $token = $_POST['csrf_token'] ?? $_SERVER['HTTP_X_CSRF_TOKEN'] ?? '';
+    if (!hash_equals(csrf_token(), $token)) {
+        http_response_code(403);
+        die('Geçersiz istek (CSRF doğrulaması başarısız).');
+    }
 }
 
 function is_admin(): bool {

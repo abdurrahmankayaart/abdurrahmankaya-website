@@ -36,13 +36,34 @@ $tags      = array_filter(array_map('trim', explode(',', $post['tags'] ?? '')));
   <meta property="og:description" content="<?= e($post['excerpt'] ?? '') ?>">
   <?php if ($post['cover_image']): ?><meta property="og:image" content="<?= SITE_URL . e($post['cover_image']) ?>"><?php endif; ?>
   <meta property="article:published_time" content="<?= e($post['created_at']) ?>">
-  <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"BlogPosting","headline":"<?= e($post['title']) ?>","datePublished":"<?= e($post['created_at']) ?>","dateModified":"<?= e($post['updated_at']) ?>","author":{"@type":"Person","name":"<?= e($site_name) ?>"},"publisher":{"@type":"Person","name":"<?= e($site_name) ?>"},"description":"<?= e($post['excerpt'] ?? '') ?>"}
-  </script>
+  <meta property="article:author"         content="<?= e($site_name) ?>">
+  <meta name="twitter:card"  content="summary_large_image">
+  <meta name="twitter:title" content="<?= e($post['title']) ?>">
+  <meta name="twitter:description" content="<?= e($post['excerpt'] ?? '') ?>">
+  <?php if ($post['cover_image']): ?><meta name="twitter:image" content="<?= SITE_URL . e($post['cover_image']) ?>"><?php endif; ?>
+  <?php
+  $ldJson = [
+    '@context'      => 'https://schema.org',
+    '@type'         => 'BlogPosting',
+    'headline'      => $post['title'],
+    'url'           => SITE_URL . '/blog/' . $slug,
+    'datePublished' => $post['created_at'],
+    'dateModified'  => $post['updated_at'],
+    'description'   => $post['excerpt'] ?? '',
+    'author'        => ['@type' => 'Person', 'name' => $site_name, 'url' => SITE_URL],
+    'publisher'     => ['@type' => 'Person', 'name' => $site_name, 'url' => SITE_URL],
+  ];
+  if ($post['cover_image']) $ldJson['image'] = SITE_URL . $post['cover_image'];
+  if ($tags) $ldJson['keywords'] = implode(', ', $tags);
+  ?>
+  <script type="application/ld+json"><?= json_encode($ldJson, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) ?></script>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#fbf9f5">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/style.css?v=6">
+  <?= ga_snippet() ?>
 </head>
 <body>
 

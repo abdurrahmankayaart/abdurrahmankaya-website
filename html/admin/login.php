@@ -8,13 +8,27 @@ if (is_admin()) {
 
 $error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $password = $_POST['password'] ?? '';
-    if ($password === ADMIN_PASSWORD) {
-        $_SESSION['admin'] = true;
-        $_SESSION['admin_time'] = time();
-        redirect('/admin/');
+    csrf_verify();
+    // Rate limiting: 10 dakikada 5 başarısız deneme
+    $now     = time();
+    $attempts = $_SESSION['login_attempts'] ?? [];
+    $attempts = array_filter($attempts, fn($t) => $now - $t < 600);
+
+    if (count($attempts) >= 5) {
+        $error = 'Çok fazla başarısız deneme. 10 dakika bekleyin.';
     } else {
-        $error = 'Hatalı şifre. Tekrar deneyin.';
+        $password = $_POST['password'] ?? '';
+        if (hash_equals(ADMIN_PASSWORD, $password)) {
+            session_regenerate_id(true);
+            $_SESSION['admin']      = true;
+            $_SESSION['admin_time'] = $now;
+            unset($_SESSION['login_attempts']);
+            redirect('/admin/');
+        } else {
+            $attempts[] = $now;
+            $_SESSION['login_attempts'] = $attempts;
+            $error = 'Hatalı şifre. Tekrar deneyin. (' . count($attempts) . '/5)';
+        }
     }
 }
 ?>
@@ -25,9 +39,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Girişi</title>
   <meta name="robots" content="noindex,nofollow">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#080810">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/style.css?v=2">
 </head>
 <body class="admin-body">
 <div class="admin-login">
@@ -39,6 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <div class="alert alert-danger"><?= e($error) ?></div>
     <?php endif; ?>
     <form method="POST">
+      <?= csrf_field() ?>
       <div class="form-group">
         <label for="password">Şifre</label>
         <input type="password" id="password" name="password" class="form-control <?= $error ? 'error' : '' ?>" placeholder="••••••••" autofocus required>

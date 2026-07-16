@@ -37,7 +37,13 @@ INSERT IGNORE INTO settings (`key`, `value`) VALUES
   ('hero_subtitle','Modern teknolojilerle işletmenizi bir üst seviyeye taşıyan, ölçeklenebilir ve yüksek performanslı dijital çözümler üretiyorum.'),
   ('hero_photo',   ''),
   ('about_text',   '5+ yıldır yazılım geliştirme ve teknoloji danışmanlığı alanında çalışıyorum. Modern web teknolojileri, bulut altyapısı ve dijital dönüşüm projelerinde işletmelere değer katıyorum.'),
-  ('skills',       'JavaScript,TypeScript,React / Next.js,Node.js,PHP,MySQL,Docker,Linux');
+  ('skills',       'JavaScript,TypeScript,React / Next.js,Node.js,PHP,MySQL,Docker,Linux'),
+  ('stat_years',    '5'),
+  ('stat_projects', '50'),
+  ('stat_clients',  '30'),
+  ('phone',         ''),
+  ('whatsapp',      ''),
+  ('address',       'İstanbul, Türkiye');
 
 -- Örnek blog yazıları
 INSERT IGNORE INTO posts (slug, title, content, excerpt, category, published) VALUES

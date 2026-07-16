@@ -6,12 +6,20 @@ $success = '';
 $error   = '';
 
 // Profil fotoğrafı yükleme
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    csrf_verify();
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['hero_photo_file'])) {
     $file = $_FILES['hero_photo_file'];
     if ($file['size'] > 0) {
-        $ext     = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
-        $allowed = ['jpg','jpeg','png','gif','webp'];
-        if (!in_array($ext, $allowed)) {
+        $ext          = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+        $allowed_ext  = ['jpg','jpeg','png','gif','webp'];
+        $allowed_mime = ['image/jpeg','image/png','image/gif','image/webp'];
+        $finfo = finfo_open(FILEINFO_MIME_TYPE);
+        $mime  = finfo_file($finfo, $file['tmp_name']);
+        finfo_close($finfo);
+        if (!in_array($ext, $allowed_ext) || !in_array($mime, $allowed_mime)) {
             $error = 'Desteklenmeyen görsel formatı';
         } elseif ($file['size'] > 10 * 1024 * 1024) {
             $error = 'Dosya çok büyük (max 10MB)';
@@ -31,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['hero_photo_file'])) 
 
 // Ayarları kaydet
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_FILES['hero_photo_file'])) {
-    $fields = ['site_name','site_title','site_desc','site_email','linkedin','github','twitter','instagram','hero_title','hero_subtitle','about_text','skills'];
+    $fields = ['site_name','site_title','site_desc','site_email','linkedin','github','twitter','instagram','hero_title','hero_subtitle','about_text','skills','stat_years','stat_projects','stat_clients','phone','address','whatsapp','ga_id','smtp_host','smtp_port','smtp_user','smtp_pass'];
     try {
         $stmt = db()->prepare("INSERT INTO settings (`key`,`value`) VALUES (?,?) ON DUPLICATE KEY UPDATE `value`=?");
         foreach ($fields as $f) {
@@ -53,9 +61,11 @@ $cfg = get_all_settings();
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Site Ayarları — Admin</title>
   <meta name="robots" content="noindex,nofollow">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#080810">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/style.css?v=2">
 </head>
 <body class="admin-body">
 
@@ -74,6 +84,7 @@ $cfg = get_all_settings();
     <div class="editor-wrap" style="margin-bottom:1.5rem">
       <h2 style="margin-bottom:1.25rem">Profil / Hero Fotoğrafı</h2>
       <form method="POST" enctype="multipart/form-data" style="display:flex;align-items:flex-start;gap:1.5rem;flex-wrap:wrap">
+        <?= csrf_field() ?>
         <?php if ($cfg['hero_photo'] ?? ''): ?>
           <img src="<?= e($cfg['hero_photo']) ?>" style="width:100px;height:100px;border-radius:50%;object-fit:cover;border:2px solid var(--border)">
         <?php else: ?>
@@ -91,6 +102,7 @@ $cfg = get_all_settings();
 
     <!-- Site Bilgileri -->
     <form method="POST">
+      <?= csrf_field() ?>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem">
 
         <div class="editor-wrap" style="grid-column:1/-1">
@@ -156,6 +168,67 @@ $cfg = get_all_settings();
           <div class="form-group">
             <label>Yetenekler / Teknolojiler (virgülle ayır)</label>
             <input type="text" name="skills" class="form-control" value="<?= e($cfg['skills'] ?? '') ?>" placeholder="PHP, MySQL, Docker, React">
+          </div>
+        </div>
+
+        <div class="editor-wrap">
+          <h2 style="margin-bottom:1.25rem">Hero İstatistikler</h2>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem">
+            <div class="form-group">
+              <label>Yıl Deneyim</label>
+              <input type="number" name="stat_years" class="form-control" value="<?= e($cfg['stat_years'] ?? '5') ?>" min="0">
+            </div>
+            <div class="form-group">
+              <label>Tamamlanan Proje</label>
+              <input type="number" name="stat_projects" class="form-control" value="<?= e($cfg['stat_projects'] ?? '50') ?>" min="0">
+            </div>
+            <div class="form-group">
+              <label>Mutlu Müşteri</label>
+              <input type="number" name="stat_clients" class="form-control" value="<?= e($cfg['stat_clients'] ?? '30') ?>" min="0">
+            </div>
+          </div>
+        </div>
+
+        <div class="editor-wrap">
+          <h2 style="margin-bottom:1.25rem">İletişim Bilgileri</h2>
+          <div class="form-group">
+            <label>Telefon</label>
+            <input type="text" name="phone" class="form-control" value="<?= e($cfg['phone'] ?? '') ?>" placeholder="+90 5XX XXX XX XX">
+          </div>
+          <div class="form-group">
+            <label>WhatsApp Numarası (başında + ile)</label>
+            <input type="text" name="whatsapp" class="form-control" value="<?= e($cfg['whatsapp'] ?? '') ?>" placeholder="+905XXXXXXXXX">
+          </div>
+          <div class="form-group">
+            <label>Adres</label>
+            <input type="text" name="address" class="form-control" value="<?= e($cfg['address'] ?? '') ?>" placeholder="İstanbul, Türkiye">
+          </div>
+        </div>
+
+        <div class="editor-wrap" style="grid-column:1/-1">
+          <h2 style="margin-bottom:1.25rem">Analitik & E-posta</h2>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+            <div class="form-group" style="grid-column:1/-1">
+              <label>Google Analytics 4 Measurement ID</label>
+              <input type="text" name="ga_id" class="form-control" value="<?= e($cfg['ga_id'] ?? '') ?>" placeholder="G-XXXXXXXXXX">
+              <small style="color:var(--dim)">Google Analytics konsolundan alınan Measurement ID. Boş bırakırsanız GA devre dışı.</small>
+            </div>
+            <div class="form-group">
+              <label>SMTP Host</label>
+              <input type="text" name="smtp_host" class="form-control" value="<?= e($cfg['smtp_host'] ?? '') ?>" placeholder="smtp.gmail.com">
+            </div>
+            <div class="form-group">
+              <label>SMTP Port</label>
+              <input type="number" name="smtp_port" class="form-control" value="<?= e($cfg['smtp_port'] ?? '587') ?>" placeholder="587">
+            </div>
+            <div class="form-group">
+              <label>SMTP Kullanıcı</label>
+              <input type="email" name="smtp_user" class="form-control" value="<?= e($cfg['smtp_user'] ?? '') ?>" placeholder="ornek@gmail.com">
+            </div>
+            <div class="form-group">
+              <label>SMTP Şifre / Uygulama Şifresi</label>
+              <input type="password" name="smtp_pass" class="form-control" value="<?= e($cfg['smtp_pass'] ?? '') ?>" placeholder="••••••••">
+            </div>
           </div>
         </div>
 
